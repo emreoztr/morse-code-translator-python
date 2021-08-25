@@ -14,6 +14,8 @@ for file in __FILES:
     __SOUNDS.append(w.readframes(w.getnframes()))
     w.close()
 
+# morse_text -> string will be used as source for morse audio
+# returns sound object
 def create_morse_sound(morse_text):
     sound = []
 
@@ -27,7 +29,10 @@ def create_morse_sound(morse_text):
     
     return sound
 
-def export_sound(sound, file_name='output.wav', format_name='wav'):
+# sound -> sound object (can create with create_morse_sound)
+# file_name -> file name and path for output (output.wav for default)
+# at the end exports sound at the specified location with specified name
+def export_sound(sound, file_name='output.wav'):
     out_sound = wave.open(file_name, 'wb')
     out_sound.setparams(__PARAMS)
 

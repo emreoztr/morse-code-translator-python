@@ -1,21 +1,10 @@
 import speech_recognition as sr
+import TextTranslation as tt
 
-__MORSE_CODE_DICT = { 'A':'.-', 'B':'-...',
-                'C':'-.-.', 'D':'-..', 'E':'.',
-                'F':'..-.', 'G':'--.', 'H':'....',
-                'I':'..', 'J':'.---', 'K':'-.-',
-                'L':'.-..', 'M':'--', 'N':'-.',
-                'O':'---', 'P':'.--.', 'Q':'--.-',
-                'R':'.-.', 'S':'...', 'T':'-',
-                'U':'..-', 'V':'...-', 'W':'.--',
-                'X':'-..-', 'Y':'-.--', 'Z':'--..',
-                '1':'.----', '2':'..---', '3':'...--',
-                '4':'....-', '5':'.....', '6':'-....',
-                '7':'--...', '8':'---..', '9':'----.',
-                '0':'-----', ', ':'--..--', '.':'.-.-.-',
-                '?':'..--..', '/':'-..-.', '-':'-....-',
-                '(':'-.--.', ')':'-.--.-', ' ': ' '}
-
+# audio_file -> path to the audio file that will be translated
+# lang -> language code that represented in audio file (en-US default) 
+# (supported languages: https://cloud.google.com/speech-to-text/docs/languages)
+# returns morse code as text from audio
 def translate(audio_file, lang="en-US"):
     recog = sr.Recognizer()
     file = sr.AudioFile(audio_file)
@@ -25,8 +14,4 @@ def translate(audio_file, lang="en-US"):
         processed_audio = recog.record(source)
 
     audio_text = recog.recognize_google(audio_data=processed_audio, language=lang)
-    return __text_to_morse(audio_text)
-
-def __text_to_morse(text):
-    morse_list = [__MORSE_CODE_DICT.get(ch) for ch in text.upper()]
-    return ' '.join(morse_list)
+    return tt.text_to_morse(audio_text)
